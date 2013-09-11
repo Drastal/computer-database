@@ -1,6 +1,6 @@
 package computer.database.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -19,26 +21,28 @@ import javax.persistence.Table;
 public class Machine {
 	@Id 
 	@GeneratedValue
-	private int id;
+	private long id;
 	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="introduced")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date introduced;
 	
 	@Column(name="discontinued")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date discontinued;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="company_id")
 	private Company company;
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -81,7 +85,7 @@ public class Machine {
 			machine = new Machine();
 		}
 		
-		public Builder id(int id) {
+		public Builder id(long id) {
 			machine.setId(id);
 			return this;
 		}

@@ -5,7 +5,7 @@
 
 	<h1>Add Computer</h1>
 	
-	<form action="addComputer.jsp" method="POST">
+	<form action="addComputer.aspx" method="POST">
 		<fieldset>
 			<div class="clearfix">
 				<label for="name">Computer name:</label>
@@ -33,6 +33,9 @@
 				<label for="company">Company Name:</label>
 				<div class="input">
 					<select name="company">
+						<c:forEach items="${requestScope.companies}" var="company">
+							<option value="${company.id}">${company.name}</option>
+						</c:forEach>
 						<option value="0">--</option>
 						<option value="1">Apple</option>
 						<option value="2">Dell</option>

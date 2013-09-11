@@ -1,20 +1,20 @@
 package computer.database.service.manager;
 
-import computer.database.service.MachineService;
-import computer.database.service.impl.MachineServiceImpl;
+import computer.database.service.DatabaseService;
+import computer.database.service.impl.DatabaseServiceImpl;
 
 public enum ServiceManager {
 	
 	INSTANCE;
 	
-	private MachineService machineService;
+	private DatabaseService databaseService;
 	
 	private ServiceManager() {
-		machineService = new MachineServiceImpl();
+		databaseService = new DatabaseServiceImpl();
 	}
 	
-	public MachineService getMachineService() {
-		return machineService;
+	public DatabaseService getMachineService() {
+		return databaseService;
 	}
 	
 }
