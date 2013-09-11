@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="computer.database.domain.*"%>
 <jsp:include page="include/header.jsp" />
 <section id="main">
 
@@ -16,14 +18,14 @@
 			<div class="clearfix">
 				<label for="introduced">Introduced date:</label>
 				<div class="input">
-					<input type="date" name="introducedDate" pattern="YY-MM-dd"/>
+					<input type="date" name="introducedDate" pattern="YYYY-MM-dd"/>
 					<span class="help-inline">YYYY-MM-DD</span>
 				</div>
 			</div>
 			<div class="clearfix">
 				<label for="discontinued">Discontinued date:</label>
 				<div class="input">
-					<input type="date" name="introducedDate" pattern="YY-MM-dd"/>
+					<input type="date" name="discontinuedDate" pattern="YYYY-MM-dd"/>
 					<span class="help-inline">YYYY-MM-DD</span>
 				</div>
 			</div>

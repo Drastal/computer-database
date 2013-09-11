@@ -1,15 +1,21 @@
 package computer.database.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
-//@Entity
-//@Table(name = "user")
-//@NamedQuery(name = "findAllUsers", query = "Select u From User u")
+@Entity
+@Table(name = "computer")
+@NamedQuery(name = "findAllMachines", query = "Select m From Machine m")
 public class Machine {
 	@Id 
 	@GeneratedValue
@@ -24,8 +30,9 @@ public class Machine {
 	@Column(name="discontinued")
 	private Date discontinued;
 	
-	@Column(name="company_id")
-	private int company_id;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="company_id")
+	private Company company;
 	
 	public int getId() {
 		return id;
@@ -59,12 +66,12 @@ public class Machine {
 		this.discontinued = discontinued;
 	}
 
-	public int getCompany_id() {
-		return company_id;
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setCompany_id(int company_id) {
-		this.company_id = company_id;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public static class Builder {
@@ -94,8 +101,8 @@ public class Machine {
 			return this;
 		}
 		
-		public Builder company_id(int company_id) {
-			machine.setCompany_id(company_id);
+		public Builder company(Company company) {
+			machine.setCompany(company);
 			return this;
 		}
 		
@@ -108,7 +115,7 @@ public class Machine {
 	public String toString() {
 		return "Machine [id=" + id + ", name=" + name + ", introduced=" + introduced + 
 				", discontinued=" + discontinued + ", discontinued=" + discontinued + 
-				", company id= " + company_id + "]";
+				", company= " + company + "]";
 	}
 	
 	

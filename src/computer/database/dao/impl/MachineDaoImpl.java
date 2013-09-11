@@ -2,6 +2,8 @@ package computer.database.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import computer.database.dao.MachineDao;
 import computer.database.dao.manager.DaoManager;
 import computer.database.domain.Machine;
