@@ -4,23 +4,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.formation.jee.dao.UserDao;
-import com.formation.jee.dao.impl.UserDaoImpl;
+import computer.database.dao.MachineDao;
+import computer.database.dao.impl.MachineDaoImpl;
 
 public enum DaoManager {
 
 	INSTANCE;
 
-	private UserDao userDao;
+	private MachineDao machineDao;
 	private EntityManagerFactory emf;
 	
 	private DaoManager() {
 		emf = Persistence.createEntityManagerFactory("epfPU");
-		userDao = new UserDaoImpl();
+		machineDao = new MachineDaoImpl();
 	}
 
-	public UserDao getUserDao() {
-		return userDao;
+	public MachineDao getMachineDao() {
+		return machineDao;
 	}
 	
 	public EntityManager getEntityManager() {

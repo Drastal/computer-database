@@ -1,20 +1,20 @@
 package computer.database.service.manager;
 
-import com.formation.jee.service.UserService;
-import com.formation.jee.service.impl.UserServiceImpl;
+import computer.database.service.MachineService;
+import computer.database.service.impl.MachineServiceImpl;
 
 public enum ServiceManager {
 	
 	INSTANCE;
 	
-	private UserService userService;
+	private MachineService machineService;
 	
 	private ServiceManager() {
-		userService = new UserServiceImpl();
+		machineService = new MachineServiceImpl();
 	}
 	
-	public UserService getUserService() {
-		return userService;
+	public MachineService getMachineService() {
+		return machineService;
 	}
 	
 }
