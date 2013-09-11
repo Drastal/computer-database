@@ -1,5 +1,7 @@
 package computer.database.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -57,6 +59,12 @@ public class Machine {
 	public Date getIntroduced() {
 		return introduced;
 	}
+	
+	public String getDateAsString(Date date) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(date);
+	}
+
 
 	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;

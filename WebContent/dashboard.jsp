@@ -34,6 +34,8 @@
 								<td>${machine.name}</td>
 								<td>${machine.introduced}</td>
 								<td>${machine.discontinued}</td>
+								<%-- <td>${machine.getDateAsString(machine.introduced)}</td>
+								<td>${machine.getDateAsString(machine.discontinued)}</td> --%>
 								<c:choose>
 									<c:when test="${machine.company!=NULL }">
 										<td>${machine.company.name}</td>
