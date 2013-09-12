@@ -12,5 +12,5 @@ public interface DatabaseService {
 	abstract List<Company> getCompanies();
 
 	void create(Machine machine);
-
+	
 }

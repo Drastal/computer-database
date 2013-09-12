@@ -3,13 +3,14 @@
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
-	<h1 id="homeTitle">456 Computers found</h1>
+	<h1 id="homeTitle">${requestScope.sizeList} Computers found</h1>
 	<div id="actions">
 		<form action="" method="GET">
 			<input type="search" id="searchbox" name="search" value=""
 				placeholder="Search name"> <input type="submit"
 				id="searchsubmit" value="Filter by name" class="btn primary">
 		</form>
+		<!-- where computer.name like -->
 		<a class="btn success" id="add" href="addComputer.aspx">Add
 			Computer</a>
 	</div>
