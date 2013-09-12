@@ -13,5 +13,5 @@ public interface DatabaseService {
 	abstract Company getCompany(long id);
 
 	void create(Machine machine);
-
+	
 }

@@ -34,6 +34,7 @@ public class MachineController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
 		request.setAttribute("machines", machineService.getMachines());
+		request.setAttribute("sizeList", machineService.getMachines().size());
 		String searching = request.getParameter("search");
 		System.out.println(searching);
 		
