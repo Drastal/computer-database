@@ -6,6 +6,7 @@ import javax.persistence.Persistence;
 
 import computer.database.dao.CompanyDao;
 import computer.database.dao.MachineDao;
+import computer.database.dao.impl.CompanyDaoImpl;
 import computer.database.dao.impl.MachineDaoImpl;
 
 public enum DaoManager {
@@ -19,6 +20,7 @@ public enum DaoManager {
 	private DaoManager() {
 		emf = Persistence.createEntityManagerFactory("epfPU");
 		machineDao = new MachineDaoImpl();
+		companyDao = new CompanyDaoImpl();
 	}
 
 	public MachineDao getMachineDao() {

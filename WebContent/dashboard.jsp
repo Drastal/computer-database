@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="computer.database.domain.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
@@ -29,24 +30,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.machines}" var="machine">
-							<tr>
-								<td>${machine.name}</td>
-								<td>${machine.introduced}</td>
-								<td>${machine.discontinued}</td>
-								<%-- <td>${machine.getDateAsString(machine.introduced)}</td>
-								<td>${machine.getDateAsString(machine.discontinued)}</td> --%>
-								<c:choose>
-									<c:when test="${machine.company!=NULL }">
-										<td>${machine.company.name}</td>
-									</c:when>
-									<c:otherwise>
-										<td></td>
-									</c:otherwise>
-								</c:choose>
-							</tr>
-				</c:forEach>
-			</tbody>
+			<c:forEach items="${requestScope.machines}" var="machine">
+				<tr>
+					<td>${machine.name}</td>
+					<td>${fn:substring(machine.introduced, 0, 10)}</td>
+					<td>${fn:substring(machine.discontinued, 0,10)}</td>
+					<c:choose>
+						<c:when test="${machine.company!=NULL }">
+							<td>${machine.company.name}</td>
+						</c:when>
+						<c:otherwise>
+							<td></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+			</c:forEach>
+		</tbody>
 		</table>
 </section>
 

@@ -48,7 +48,6 @@ public class AddComputer extends HttpServlet {
 	 * La methode doPost est executee lorsqu'un client poste des informations (en general formulaire) sur l'URI UserServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("in doPost");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String name = request.getParameter("name");
 		Date introducedUtil;
@@ -61,14 +60,13 @@ public class AddComputer extends HttpServlet {
 			discontinuedUtil=new Date();// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(introducedUtil);
-		System.out.println(discontinuedUtil);
 		java.sql.Date discontinuedSql =  new java.sql.Date(discontinuedUtil.getTime());
 		java.sql.Date introducedSql =  new java.sql.Date(introducedUtil.getTime());
-		System.out.println(introducedSql);
-		System.out.println(discontinuedSql);
-//		int company_id = Integer.parseInt(request.getParameter("company"));
-//		
+		long company_id = Long.parseLong(request.getParameter("company"));
+//		System.out.println(name);
+//		System.out.println(introducedSql);
+//		System.out.println(discontinuedSql);
+//		System.out.println(company_id);
 		
 		//Test de validite des champs du formulaire d'ajout
 //		if(name != null && !name.isEmpty() && introducedSql != null && discontinuedSql != null)

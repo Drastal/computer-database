@@ -53,4 +53,8 @@ public class Company {
 			return company;
 		}
 	}
+	@Override
+	public String toString() {
+		return "Company [id=" + id + ", name=" + name + "]";
+	}
 }

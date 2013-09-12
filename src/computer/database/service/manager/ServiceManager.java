@@ -3,6 +3,7 @@ package computer.database.service.manager;
 import computer.database.service.DatabaseService;
 import computer.database.service.impl.DatabaseServiceImpl;
 
+
 public enum ServiceManager {
 	
 	INSTANCE;
