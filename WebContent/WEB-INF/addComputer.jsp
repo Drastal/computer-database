@@ -4,14 +4,27 @@
 
 <script type="text/javascript">
 
+	/* Fonctions de verification des champs du formulaire */
 	function underline(field, error) {
-		if (error)
+		if (error) {
+			alert("Please complete the required field.");
 			field.style.backgroundColor = "#fba";
-		else
+		} else
 			field.style.backgroundColor = "";
 	}
+	
 	function verifName(field) {
-		if (field.value=="") {
+		if (field.value == "") {
+			underline(field, true);
+			return false;
+		} else {
+			underline(field, false);
+			return true;
+		}
+	}
+	
+	function verifDate(field) {
+		if (field.value == "") {
 			underline(field, true);
 			return false;
 		} else {
@@ -31,7 +44,7 @@
 				<label for="name">Computer name:</label>
 				<div class="input" >
 					<input type="text" name="name" onblur="verifName(this)"/>
-					<span class="help-inline">Required</span>
+					<span class="help-inline" name="name-help">Required</span>
 				</div>
 			</div>
 	
@@ -53,6 +66,7 @@
 				<label for="company">Company Name:</label>
 				<div class="input">
 					<select name="company">
+						<option value="0">No company selected</option>
 						<c:forEach items="${requestScope.companies}" var="company">
 							<option value="${company.id}">${company.name}</option>
 						</c:forEach>

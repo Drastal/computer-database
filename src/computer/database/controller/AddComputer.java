@@ -51,8 +51,12 @@ public class AddComputer extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Récupération des champs du formulaire d'ajout
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
+		// Nom
 		String name = request.getParameter("name");
+		
+		// Dates introduced et discontinued
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date introducedUtil=null;
 		Date discontinuedUtil=null;
 		try {
@@ -60,28 +64,36 @@ public class AddComputer extends HttpServlet {
 			introducedUtil = df.parse(request.getParameter("introducedDate"));
 			discontinuedUtil = df.parse(request.getParameter("discontinuedDate"));
 		} catch (ParseException e) {
-			introducedUtil=new Date();
-			discontinuedUtil=new Date();
 			e.printStackTrace();
 		}
+		
+		// Compagnie
+		Company company;
 		long company_id = Long.parseLong(request.getParameter("company"));
-		
-		// Récupération de la compagnie à partir de l'id
-		Company company = databaseService.getCompany(company_id);
-		
+		// Si une compagnie est sélectionnée: la récupérer à partir de son id
+		if (company_id != 0) {
+			company = databaseService.getCompany(company_id);
+		} else {
+			company = null;
+		}
 //		System.out.println(name);
 //		System.out.println(introducedSql);
 //		System.out.println(discontinuedSql);
 //		System.out.println(company_id);
 //		System.out.println(company.getName());
-		
-		//Test de validite des champs du formulaire d'ajout
-		if(name.length()!=0 && introducedUtil!=null && discontinuedUtil!=null && company!=null)
-			databaseService.create(new Machine.Builder().name(name).introduced(introducedUtil)
-					.discontinued(discontinuedUtil).company(company).build());
-		
-		//Redirection vers la page
-		response.sendRedirect(response.encodeURL("addComputer.aspx"));
+		if(name.trim().length()==0){
+			response.sendRedirect(response.encodeURL("addComputer.aspx"));
+		}else{
+			// Test de validite des champs du formulaire d'ajout
+			if (name.length() != 0 && introducedUtil != null && discontinuedUtil != null && company != null)
+				databaseService.create(new Machine.Builder().name(name)
+						.introduced(introducedUtil)
+						.discontinued(discontinuedUtil).company(company)
+						.build());
+
+			// Redirection vers la page
+			response.sendRedirect(response.encodeURL("addComputer.aspx"));
+		}
 	}
 
 }
