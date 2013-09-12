@@ -16,14 +16,14 @@ import computer.database.service.manager.ServiceManager;
  * Servlet implementation class UserServlet
  */
 @WebServlet("/computerList.aspx")
-public class MachineController extends HttpServlet {
+public class DashboardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private DatabaseService machineService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MachineController() {
+    public DashboardController() {
         super();
         machineService = ServiceManager.INSTANCE.getMachineService();
     }
