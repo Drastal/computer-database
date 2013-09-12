@@ -85,6 +85,7 @@ public class Machine {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
 
 	public static class Builder {
 		private Machine machine;

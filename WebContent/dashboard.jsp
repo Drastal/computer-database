@@ -13,7 +13,7 @@
 				value="Filter by name"
 				class="btn primary">
 		</form>
-		<a class="btn success" id="add" href="addComputer.jsp">Add Computer</a>
+		<a class="btn success" id="add" href="addComputer.aspx">Add Computer</a>
 	</div>
 
 		<table class="computers zebra-striped">

@@ -5,7 +5,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import computer.database.dao.manager.DaoManager;
+import computer.database.domain.Company;
+import computer.database.domain.Machine;
 import computer.database.service.DatabaseService;
 import computer.database.service.manager.ServiceManager;
 
@@ -48,33 +54,54 @@ public class AddComputer extends HttpServlet {
 	 * La methode doPost est executee lorsqu'un client poste des informations (en general formulaire) sur l'URI UserServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Récupération des champs du formulaire d'ajout
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String name = request.getParameter("name");
-		Date introducedUtil;
-		Date discontinuedUtil;
+		Date introducedUtil=null;
+		Date discontinuedUtil=null;
 		try {
+			// Conversion String to Date
 			introducedUtil = df.parse(request.getParameter("introducedDate"));
 			discontinuedUtil = df.parse(request.getParameter("discontinuedDate"));
 		} catch (ParseException e) {
 			introducedUtil=new Date();
-			discontinuedUtil=new Date();// TODO Auto-generated catch block
+			discontinuedUtil=new Date();
 			e.printStackTrace();
 		}
-		java.sql.Date discontinuedSql =  new java.sql.Date(discontinuedUtil.getTime());
-		java.sql.Date introducedSql =  new java.sql.Date(introducedUtil.getTime());
 		long company_id = Long.parseLong(request.getParameter("company"));
+		
+		// Récupération de la compagnie à partir de l'id
+		EntityManager em = null;
+		Company company=null;
+		List<Company> compList=null;
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			em.getTransaction().begin();
+			Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id");
+			q.setParameter("id", company_id);
+			compList = q.getResultList();
+			company = compList.get(0);
+			em.getTransaction().commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(em != null)
+				em.close();
+		}
+		
 //		System.out.println(name);
 //		System.out.println(introducedSql);
 //		System.out.println(discontinuedSql);
 //		System.out.println(company_id);
+//		System.out.println(company.getName());
 		
 		//Test de validite des champs du formulaire d'ajout
-//		if(name != null && !name.isEmpty() && introducedSql != null && discontinuedSql != null)
-//			machineService.create(new Machine.Builder().name(name).introduced(introducedSql)
-//					.discontinued(discontinuedSql).company(company_id).build());
-//		
+		if(name.length()!=0 && introducedUtil!=null && discontinuedUtil!=null && company!=null)
+			databaseService.create(new Machine.Builder().name(name).introduced(introducedUtil)
+					.discontinued(discontinuedUtil).company(company).build());
+		
 		//Redirection vers la page
-//		response.sendRedirect(response.encodeURL("addComputer.aspx"));
+		response.sendRedirect(response.encodeURL("addComputer.aspx"));
 	}
 
 }

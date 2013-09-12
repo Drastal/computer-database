@@ -42,7 +42,7 @@
 		</fieldset>
 		<div class="actions">
 			<input type="submit" value="Add" class="btn primary">
-			or <a href="dashboard.jsp" class="btn">Cancel</a>
+			or <a href="computerList.aspx" class="btn">Cancel</a>
 		</div>
 	</form>
 </section>
