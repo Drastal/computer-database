@@ -3,6 +3,7 @@ package computer.database.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import computer.database.dao.CompanyDao;
 import computer.database.dao.manager.DaoManager;
@@ -33,7 +34,26 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return companies;
 	}
-	
+	 public Company getCompany(long id){
+		EntityManager em = null;
+		Company company = null;
+		List<Company> compList = null;
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			em.getTransaction().begin();
+			Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id");
+			q.setParameter("id", id);
+			compList = q.getResultList();
+			company = compList.get(0);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+		return company;
+	 }
 	@Override
 	public void create(Company user) {
 //		EntityManager em = null;

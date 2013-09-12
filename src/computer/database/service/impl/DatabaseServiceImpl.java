@@ -31,6 +31,10 @@ public class DatabaseServiceImpl implements DatabaseService {
 		return companyDao.getCompanies();
 	}
 	
+	public Company getCompany(long id){
+		return companyDao.getCompany(id);
+	}
+	
 	@Override
 	public void create(Machine machine) {
 		machineDao.create(machine);

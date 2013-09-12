@@ -10,6 +10,7 @@ public interface DatabaseService {
 	abstract List<Machine> getMachines();
 	
 	abstract List<Company> getCompanies();
+	abstract Company getCompany(long id);
 
 	void create(Machine machine);
 

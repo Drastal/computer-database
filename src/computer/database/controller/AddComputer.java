@@ -71,23 +71,7 @@ public class AddComputer extends HttpServlet {
 		long company_id = Long.parseLong(request.getParameter("company"));
 		
 		// Récupération de la compagnie à partir de l'id
-		EntityManager em = null;
-		Company company=null;
-		List<Company> compList=null;
-		try {
-			em = DaoManager.INSTANCE.getEntityManager();
-			em.getTransaction().begin();
-			Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id");
-			q.setParameter("id", company_id);
-			compList = q.getResultList();
-			company = compList.get(0);
-			em.getTransaction().commit();
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(em != null)
-				em.close();
-		}
+		Company company = databaseService.getCompany(company_id);
 		
 //		System.out.println(name);
 //		System.out.println(introducedSql);
