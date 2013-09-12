@@ -24,8 +24,14 @@ public class CompanyDaoImpl implements CompanyDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			//Ici on appelle la namedQuery declaree en annotation dans la classe domain.User
-			companies = em.createNamedQuery("findAllCompanies").getResultList();
+			// Methode avec NamedQuery declaree en annotation dans la classe domain.Company
+//			companies = em.createNamedQuery("findAllCompanies").getResultList();
+			
+			// Methode 2 avec transaction
+			em.getTransaction().begin();
+			Query q = em.createQuery("Select c From Company c");
+			companies = q.getResultList();
+			em.getTransaction().commit();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -36,7 +42,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 	 public Company getCompany(long id){
 		EntityManager em = null;
-		Company company = null;
+		Company company = new Company();
 		List<Company> compList = null;
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
