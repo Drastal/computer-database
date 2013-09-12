@@ -34,8 +34,10 @@ public class MachineController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
 		request.setAttribute("machines", machineService.getMachines());
+		String searching = request.getParameter("search");
+		System.out.println(searching);
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/dashboard.jsp"));// Ajout Web-inf ?
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));// Ajout Web-inf ?
 		rd.forward(request, response);
 	}
 

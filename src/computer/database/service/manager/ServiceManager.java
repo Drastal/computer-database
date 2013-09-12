@@ -18,4 +18,4 @@ public enum ServiceManager {
 		return databaseService;
 	}
 	
-}
+} 

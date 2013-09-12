@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="computer.database.domain.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
@@ -33,8 +32,8 @@
 			<c:forEach items="${requestScope.machines}" var="machine">
 				<tr>
 					<td>${machine.name}</td>
-					<td>${fn:substring(machine.introduced, 0, 10)}</td>
-					<td>${fn:substring(machine.discontinued, 0,10)}</td>
+					<td>${machine.introduced}</td>
+					<td>${machine.discontinued}</td>
 					<c:choose>
 						<c:when test="${machine.company!=NULL }">
 							<td>${machine.company.name}</td>

@@ -46,7 +46,7 @@ public class AddComputer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
 		request.setAttribute("companies", databaseService.getCompanies());
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/addComputer.jsp"));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/addComputer.jsp"));
 		rd.forward(request, response);
 	}
 

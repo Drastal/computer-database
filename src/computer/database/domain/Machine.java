@@ -59,12 +59,6 @@ public class Machine {
 	public Date getIntroduced() {
 		return introduced;
 	}
-	
-	public String getDateAsString(Date date) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		return df.format(date);
-	}
-
 
 	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
@@ -76,6 +70,19 @@ public class Machine {
 
 	public void setDiscontinued(Date discontinued) {
 		this.discontinued = discontinued;
+	}
+	
+	private String getDateAsString(Date date) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(date);
+	}
+	
+	public String getIntroducedAsString() {
+		return getDateAsString(introduced);
+	}
+	
+	public String getDiscontinuedAsString(){
+		return getDateAsString(discontinued);
 	}
 
 	public Company getCompany() {
