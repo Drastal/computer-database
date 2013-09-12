@@ -6,30 +6,58 @@
 
 	/* Fonctions de verification des champs du formulaire */
 	function underline(field, error) {
-		if (error) {
-			alert("Please complete the required field.");
+		if (error){
 			field.style.backgroundColor = "#fba";
-		} else
+		}else
 			field.style.backgroundColor = "";
 	}
-	
 	function verifName(field) {
-		if (field.value == "") {
+		if (field.value=="") {
+			alert("Computer name required.");
 			underline(field, true);
-			return false;
+			/* return false; */
 		} else {
 			underline(field, false);
-			return true;
+			/* return true; */
 		}
 	}
 	
 	function verifDate(field) {
-		if (field.value == "") {
-			underline(field, true);
-			return false;
-		} else {
+		var date = field.value;
+		if(date==""){
 			underline(field, false);
-			return true;
+		}else{
+			var dateCheck = field.value.match(/^\d{4}-\d{2}-\d{2}$/);
+			if(!dateCheck){
+				underline(field, true);
+				alert("Please enter a date (YYYY-MM-DD)");
+			} else{
+				var month = parseInt(date.substr(5,2));
+				var day = parseInt(date.substr(8,2));
+				if(month<1 || month>12){
+					alert("Invalid month: " + month);
+					field.value="";
+				}else{
+					if(month==2){
+						if(day<0||day>29){
+							alert("Invalid day: " + day);
+							field.value="";
+						}
+					}else {
+						if(month==4||month==6||month==9||month==11){
+							if(day<0||day>30){
+								alert("Invalid day: " + day);
+								field.value="";
+							}
+						}else{
+							if(day<0||day>31){
+								alert("Invalid day: " + day);
+								field.value="";
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 </script>
@@ -42,23 +70,23 @@
 		<fieldset>
 			<div class="clearfix">
 				<label for="name">Computer name:</label>
-				<div class="input" >
+				<div class="input" onblur="verifName(this)">
 					<input type="text" name="name" onblur="verifName(this)"/>
-					<span class="help-inline" name="name-help">Required</span>
+					<span class="help-inline">Required</span>
 				</div>
 			</div>
 	
 			<div class="clearfix">
 				<label for="introduced">Introduced date:</label>
 				<div class="input">
-					<input type="date" name="introducedDate" pattern="YYYY-MM-dd"/>
+					<input type="date" name="introducedDate" pattern="YYYY-MM-dd" onblur="verifDate(this)"/>
 					<span class="help-inline">YYYY-MM-DD</span>
 				</div>
 			</div>
 			<div class="clearfix">
 				<label for="discontinued">Discontinued date:</label>
 				<div class="input">
-					<input type="date" name="discontinuedDate" pattern="YYYY-MM-dd"/>
+					<input type="date" name="discontinuedDate" pattern="YYYY-MM-dd" onblur="verifDate(this)"/>
 					<span class="help-inline">YYYY-MM-DD</span>
 				</div>
 			</div>
@@ -66,7 +94,7 @@
 				<label for="company">Company Name:</label>
 				<div class="input">
 					<select name="company">
-						<option value="0">No company selected</option>
+						<option value="0">---No company selected---</option>
 						<c:forEach items="${requestScope.companies}" var="company">
 							<option value="${company.id}">${company.name}</option>
 						</c:forEach>
