@@ -33,10 +33,14 @@ public class DashboardController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
-		request.setAttribute("machines", machineService.getMachines());
-		request.setAttribute("sizeList", machineService.getMachines().size());
 		String searching = request.getParameter("search");
-		System.out.println(searching);
+		if(searching==null||searching.trim().isEmpty()){
+			request.setAttribute("machines", machineService.getMachines());
+			request.setAttribute("sizeList", machineService.getMachines().size());
+		} else {
+			request.setAttribute("machines", machineService.getMachines(searching));
+			request.setAttribute("sizeList", machineService.getMachines(searching).size());
+		}
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));// Ajout Web-inf ?
 		rd.forward(request, response);

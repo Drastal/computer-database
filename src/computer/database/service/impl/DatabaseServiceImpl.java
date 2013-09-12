@@ -27,6 +27,11 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 	
 	@Override
+	public List<Machine> getMachines(String searching) {
+		return machineDao.getMachines(searching);
+	}
+	
+	@Override
 	public List<Company> getCompanies() {
 		return companyDao.getCompanies();
 	}

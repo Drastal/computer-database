@@ -41,6 +41,29 @@ public class MachineDaoImpl implements MachineDao {
 		}
 		return machines;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Machine> getMachines(String searching) {
+
+		EntityManager em = null;
+
+		List<Machine> machines = null;
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			//Ici on appelle la namedQuery declaree en annotation dans la classe domain.User
+			machines = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
+					.setParameter("searching", "%"+searching+"%").getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(em != null)
+				em.close();
+		}
+		return machines;
+	}
+	
 
 	@Override
 	public void create(Machine user) {
