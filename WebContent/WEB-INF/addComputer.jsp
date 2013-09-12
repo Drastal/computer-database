@@ -1,6 +1,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="computer.database.domain.*"%>
 <jsp:include page="include/header.jsp" />
+
+<script type="text/javascript">
+
+	function underline(field, error) {
+		if (error)
+			field.style.backgroundColor = "#fba";
+		else
+			field.style.backgroundColor = "";
+	}
+	function verifName(field) {
+		if (field.value=="") {
+			underline(field, true);
+			return false;
+		} else {
+			underline(field, false);
+			return true;
+		}
+	}
+</script>
+
 <section id="main">
 
 	<h1>Add Computer</h1>
@@ -9,8 +29,8 @@
 		<fieldset>
 			<div class="clearfix">
 				<label for="name">Computer name:</label>
-				<div class="input">
-					<input type="text" name="name" />
+				<div class="input" >
+					<input type="text" name="name" onblur="verifName(this)"/>
 					<span class="help-inline">Required</span>
 				</div>
 			</div>
