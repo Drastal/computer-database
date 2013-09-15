@@ -25,12 +25,8 @@ public class MachineDaoImpl implements MachineDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			// Methode avec NamedQuery declaree en annotation dans la classe domain.Machine
-//			machines = em.createNamedQuery("findAllMachines").getResultList();
-
-			// Methode 2 avec transaction
 			em.getTransaction().begin();
-			Query q = em.createQuery("Select m From Machine m");
+			Query q = em.createNamedQuery("findAllMachines");
 			machines = q.getResultList();
 			em.getTransaction().commit();
 		} catch (Exception e) {
@@ -53,8 +49,7 @@ public class MachineDaoImpl implements MachineDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			//Ici on appelle la namedQuery declaree en annotation dans la classe domain.User
-			machines = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
-					.setParameter("searching", "%"+searching+"%").getResultList();
+			machines = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%").getResultList();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -95,7 +90,7 @@ public class MachineDaoImpl implements MachineDao {
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
-            Query q = em.createQuery("Select m From Machine m");
+            Query q = em.createNamedQuery("findAllMachines");
             
             //Pour limiter le nombre de résultats de la requête Hibernate
             q.setFirstResult((pageNumber - 1) * resultPerPage);
@@ -119,8 +114,7 @@ public class MachineDaoImpl implements MachineDao {
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
-            Query q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
-					.setParameter("searching", "%"+searching+"%");
+            Query q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");
             
             //Pour limiter le nombre de résultats de la requête Hibernate
             q.setFirstResult((pageNumber - 1) * resultPerPage);
@@ -144,7 +138,7 @@ public class MachineDaoImpl implements MachineDao {
         System.out.println(id);
         try {
             em = DaoManager.INSTANCE.getEntityManager();
-            machine = em.createQuery("SELECT m FROM Machine m WHERE m.id = :machineId").setParameter("machineId", id).getResultList();
+            machine = em.createNamedQuery("matchMachineById").setParameter("machineId", id).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

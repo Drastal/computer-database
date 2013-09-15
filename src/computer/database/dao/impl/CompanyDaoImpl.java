@@ -24,12 +24,8 @@ public class CompanyDaoImpl implements CompanyDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			// Methode avec NamedQuery declaree en annotation dans la classe domain.Company
-//			companies = em.createNamedQuery("findAllCompanies").getResultList();
-			
-			// Methode 2 avec transaction
 			em.getTransaction().begin();
-			Query q = em.createQuery("Select c From Company c");
+			Query q = em.createNamedQuery("findAllCompanies");
 			companies = q.getResultList();
 			em.getTransaction().commit();
 		} catch(Exception e) {
@@ -49,8 +45,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
-			Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id");
-			q.setParameter("id", id);
+			Query q = em.createNamedQuery("matchCompanyById").setParameter("id", id);
 			compList = q.getResultList();
 			company = compList.get(0);
 			em.getTransaction().commit();
@@ -62,26 +57,4 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return company;
 	 }
-	
-	@Override
-	public void create(Company company) {
-//		EntityManager em = null;
-//			try {
-//				//Recuperation de l'entityManager qui gere la connexion a la BD
-//				em = DaoManager.INSTANCE.getEntityManager();
-//				//Debut de transaction (obligatoire pour des operations d'ecriture sur la BD)
-//				em.getTransaction().begin();
-//				
-//				//Sauvegarde de l'utilisateur
-//				em.persist(user);
-//				
-//				//Commit de la transaction = on applique toutes les operations ci dessus
-//				em.getTransaction().commit();
-//			} catch(Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//				if(em != null)
-//					em.close();
-//			}
-	}
 }
