@@ -86,4 +86,53 @@ public class MachineDaoImpl implements MachineDao {
 				em.close();
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Machine> getMachines(int resultPerPage, int pageNumber) {
+		EntityManager em = null;
+        List<Machine> machines = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+            Query q = em.createQuery("Select m From Machine m");
+            
+            //Pour limiter le nombre de résultats de la requête Hibernate
+            q.setFirstResult((pageNumber - 1) * resultPerPage);
+            q.setMaxResults(resultPerPage);
+
+            machines = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null)
+                em.close();
+        }
+        return machines;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
+		EntityManager em = null;
+        List<Machine> machines = null;
+
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+            Query q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
+					.setParameter("searching", "%"+searching+"%");
+            
+            //Pour limiter le nombre de résultats de la requête Hibernate
+            q.setFirstResult((pageNumber - 1) * resultPerPage);
+            q.setMaxResults(resultPerPage);
+
+            machines = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null)
+                em.close();
+        }
+        return machines;
+	}
 }

@@ -40,7 +40,9 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return companies;
 	}
-	 public Company getCompany(long id){
+	
+	@SuppressWarnings("unchecked")
+	public Company getCompany(long id){
 		EntityManager em = null;
 		Company company = new Company();
 		List<Company> compList = null;
@@ -60,8 +62,9 @@ public class CompanyDaoImpl implements CompanyDao {
 		}
 		return company;
 	 }
+	
 	@Override
-	public void create(Company user) {
+	public void create(Company company) {
 //		EntityManager em = null;
 //			try {
 //				//Recuperation de l'entityManager qui gere la connexion a la BD

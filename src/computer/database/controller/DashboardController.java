@@ -19,6 +19,7 @@ import computer.database.service.manager.ServiceManager;
 public class DashboardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int resultPerPage = 50;
+	private int pageNumber = 1;
 	private int totalPage = 1;
 
 	private DatabaseService machineService;
@@ -37,22 +38,28 @@ public class DashboardController extends HttpServlet {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
 		if(request.getParameter("resultsNb")!=null)
 			resultPerPage = Integer.parseInt(request.getParameter("resultsNb"));
-		//int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		if(request.getParameter("pageNumber")!=null)
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		request.setAttribute("resultsQuantity", resultPerPage);
 		String searching = request.getParameter("search");
+		
 		if(searching==null||searching.trim().isEmpty()){
-			request.setAttribute("machines", machineService.getMachines());
+			request.setAttribute("machines", machineService.getMachines(resultPerPage, pageNumber));
 			request.setAttribute("sizeList", machineService.getMachines().size());
 			totalPage = (int)Math.ceil((double)machineService.getMachines().size() / resultPerPage);
+			request.setAttribute("totalPage", totalPage);
 		} else {
-			request.setAttribute("machines", machineService.getMachines(searching));
+			request.setAttribute("machines", machineService.getMachines(searching, resultPerPage, pageNumber));
 			request.setAttribute("sizeList", machineService.getMachines(searching).size());
 			totalPage = (int)Math.ceil((double)machineService.getMachines(searching).size() / resultPerPage);
+			request.setAttribute("totalPage", totalPage);
 		}
+		System.out.println(pageNumber);
 		System.out.println(totalPage);
 		System.out.println(resultPerPage);
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));// Ajout Web-inf ?
+		
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));
 		rd.forward(request, response);
 	}
 

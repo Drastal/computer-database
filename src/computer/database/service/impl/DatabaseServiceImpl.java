@@ -44,5 +44,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public void create(Machine machine) {
 		machineDao.create(machine);
 	}
+	@Override
+	public List<Machine> getMachines(int resultPerPage, int pageNumber) {
+		return machineDao.getMachines(resultPerPage, pageNumber);
+	}
+	@Override
+	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
+		return machineDao.getMachines(searching, resultPerPage, pageNumber);
+	}
 	
 }
