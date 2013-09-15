@@ -30,31 +30,11 @@
 		<tbody>
 			<c:forEach items="${requestScope.machines}" var="machine">
 				<tr>
-					<td>${machine.name}</td>
-					<c:choose>
-						<c:when test="${machine.introduced!=NULL }">
-							<td>${machine.introducedAsString}</td>
-						</c:when>
-						<c:otherwise>
-							<td></td>
-						</c:otherwise>
-					</c:choose>
-					<c:choose>
-						<c:when test="${machine.discontinued!=NULL }">
-							<td>${machine.discontinuedAsString}</td>
-						</c:when>
-						<c:otherwise>
-							<td></td>
-						</c:otherwise>
-					</c:choose>
-					<c:choose>
-						<c:when test="${machine.company!=NULL }">
-							<td>${machine.company.name}</td>
-						</c:when>
-						<c:otherwise>
-							<td></td>
-						</c:otherwise>
-					</c:choose>
+				<!-- Vérif si ok sans onclick -->
+					<td><a href="<c:url value="editComputer.aspx?id=${machine.id}"/>" onclick="">${machine.name}</a></td>
+					<td>${machine.introducedAsString}</td>
+					<td>${machine.discontinuedAsString}</td>
+					<td>${machine.company.name}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -150,7 +130,7 @@
     
 	<form action="" method="GET">
 		<span class="input" style="float: right;">
-			<label for="resultNb">Results per page: &nbsp;</label> <select 
+			<label for="resultNb">Results per page:&nbsp;</label> <select 
 				name="resultsNb" style="width: 60px">
 				<c:choose>
 					<c:when test="${requestScope.resultsQuantity==50}">

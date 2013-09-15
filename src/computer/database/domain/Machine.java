@@ -72,9 +72,13 @@ public class Machine {
 		this.discontinued = discontinued;
 	}
 	
-	private String getDateAsString(Date date) {
+	private String getDateAsString(Date inputDate) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		return df.format(date);
+        String date = null;
+        if (introduced != null) {
+            date = df.format(inputDate);
+        }
+        return date;
 	}
 	
 	public String getIntroducedAsString() {

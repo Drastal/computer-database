@@ -135,4 +135,27 @@ public class MachineDaoImpl implements MachineDao {
         }
         return machines;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Machine getMachine(long id) {
+		EntityManager em = null;
+        List<Machine> machine = null;
+        System.out.println(id);
+        try {
+            em = DaoManager.INSTANCE.getEntityManager();
+            machine = em.createQuery("SELECT m FROM Machine m WHERE m.id = :machineId").setParameter("machineId", id).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null)
+                em.close();
+        }
+
+        if (machine != null) {
+            return machine.get(0);
+        } else {
+            return null;
+        }
+	}
 }

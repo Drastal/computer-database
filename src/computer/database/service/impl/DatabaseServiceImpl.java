@@ -30,6 +30,20 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public List<Machine> getMachines(String searching) {
 		return machineDao.getMachines(searching);
 	}
+
+	@Override
+	public List<Machine> getMachines(int resultPerPage, int pageNumber) {
+		return machineDao.getMachines(resultPerPage, pageNumber);
+	}
+	@Override
+	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
+		return machineDao.getMachines(searching, resultPerPage, pageNumber);
+	}	
+	
+	@Override
+	public Machine getMachine(long id) {
+		return machineDao.getMachine(id);
+	}
 	
 	@Override
 	public List<Company> getCompanies() {
@@ -44,13 +58,4 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public void create(Machine machine) {
 		machineDao.create(machine);
 	}
-	@Override
-	public List<Machine> getMachines(int resultPerPage, int pageNumber) {
-		return machineDao.getMachines(resultPerPage, pageNumber);
-	}
-	@Override
-	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
-		return machineDao.getMachines(searching, resultPerPage, pageNumber);
-	}
-	
 }

@@ -18,7 +18,7 @@ import computer.database.service.manager.ServiceManager;
 @WebServlet("/computerList.aspx")
 public class DashboardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int resultPerPage = 50;
+	private int resultPerPage = 5000;
 	private int pageNumber = 1;
 	private int totalPage = 1;
 

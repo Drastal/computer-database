@@ -11,6 +11,7 @@ public interface DatabaseService {
 	abstract List<Machine> getMachines(int resultPerPage, int pageNumber);
 	abstract List<Machine> getMachines(String searching);
 	abstract List<Machine> getMachines(String searching, int resultPerPage, int pageNumber);
+	abstract Machine getMachine(long id);
 	
 	abstract List<Company> getCompanies();
 	abstract Company getCompany(long id);
