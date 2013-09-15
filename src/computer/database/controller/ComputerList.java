@@ -13,26 +13,27 @@ import computer.database.service.DatabaseService;
 import computer.database.service.manager.ServiceManager;
 
 /**
- * Servlet implementation class UserServlet
+ * Controlleur pour la liste des ordinateurs, page principale du site
+ * Affiche un tableau des ordinateurs, permet de faire une recherche
  */
 @WebServlet("/computerList.aspx")
-public class DashboardController extends HttpServlet {
+public class ComputerList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int resultPerPage = 50;
-	private int pageNumber = 1;
-	private int totalPage = 1;
+	private int resultPerPage = 50;//Nombre de résultat par page, par défaut
+	private int pageNumber = 1;//Numéro de page courante
+	private int totalPage = 1;//Nombre total de pages
 
 	private DatabaseService machineService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DashboardController() {
+    public ComputerList() {
         super();
         machineService = ServiceManager.INSTANCE.getMachineService();
     }
 
 	/**
-	 * La methode doGet est executee lorsqu'un client execute l'URI UserServlet
+	 * La methode doGet est executee lorsqu'un client execute l'URI ComputerList
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
@@ -54,6 +55,8 @@ public class DashboardController extends HttpServlet {
 			totalPage = (int)Math.ceil((double)machineService.getMachines(searching).size() / resultPerPage);
 			request.setAttribute("totalPage", totalPage);
 		}
+		
+		//A suppr après validation pagination
 		System.out.println(pageNumber);
 		System.out.println(totalPage);
 		System.out.println(resultPerPage);

@@ -9,6 +9,11 @@ import computer.database.domain.Company;
 import computer.database.domain.Machine;
 import computer.database.service.DatabaseService;
 
+/*
+ * Classe DatabaseServiceImpl
+ * Coeur de la couche service, accès aux DAO de machine et company
+ */
+
 public class DatabaseServiceImpl implements DatabaseService {
 
 	MachineDao machineDao;

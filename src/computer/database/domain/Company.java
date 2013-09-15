@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "company")
-@NamedQueries({
+@NamedQueries({//Liste des requêtes utilisées dans la classe CompanyDaoImpl
 	@NamedQuery(name = "findAllCompanies", query = "Select c From Company c"),
 	@NamedQuery(name = "matchCompanyById", query = "SELECT c FROM Company c WHERE c.id=:id"),})
 
@@ -18,47 +18,24 @@ public class Company {
 
 	@Id 
 	@GeneratedValue
-	private long id;
+	private long id;//Id de la company
 	
 	@Column(name="name")
-	private String name;
+	private String name;//Nom de la company
 	
 	public long getId() {
 		return id;
 	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public static class Builder {
-		private Company company;
-		
-		public Builder() {
-			company = new Company();
-		}
-		
-		public Builder id(long id) {
-			company.setId(id);
-			return this;
-		}
-		
-		public Builder name(String name) {
-			company.setName(name);
-			return this;
-		}
-		
-		public Company build() {
-			return company;
-		}
-	}
-	@Override
-	public String toString() {
-		return "Company [id=" + id + ", name=" + name + "]";
 	}
 }

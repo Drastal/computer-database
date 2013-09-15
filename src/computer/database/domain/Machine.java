@@ -20,29 +20,30 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "computer")
-@NamedQueries({
+@NamedQueries({//Requêtes sur la table des machines utilisées dans la classe MachineDaoImpl
 	@NamedQuery(name = "findAllMachines", query = "Select m From Machine m"),
 	@NamedQuery(name = "matchMachineById", query = "SELECT m FROM Machine m WHERE m.id = :machineId"),
     @NamedQuery(name = "searchMachine", query = "Select m From Machine m WHERE name LIKE :searching")})
+
 public class Machine {
 	@Id 
 	@GeneratedValue
-	private long id;
+	private long id;//Id de la machine
 	
 	@Column(name="name")
-	private String name;
+	private String name;//Nom de la machine
 	
 	@Column(name="introduced")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date introduced;
+	private Date introduced;//Date d'introduction de la machine
 	
 	@Column(name="discontinued")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date discontinued;
+	private Date discontinued;//Date d'arrêt de la machine
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="company_id")
-	private Company company;
+	@ManyToOne(fetch=FetchType.EAGER)//Prend en compte le fait que plusieurs ordinateurs peuvent appartenir à une même compagnie
+	@JoinColumn(name="company_id")//Fait la relation Id company <-> Nom de la company
+	private Company company;//Compagnie (Id + nom)
 	
 	public long getId() {
 		return id;
@@ -77,19 +78,22 @@ public class Machine {
 	}
 	
 	private String getDateAsString(Date inputDate) {
+		//Convertis une date au bon format et en chaine de caractères, prend en charge les dates null
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = null;
-        if (introduced != null) {
+        if (inputDate != null) {
             date = df.format(inputDate);
         }
         return date;
 	}
 	
 	public String getIntroducedAsString() {
+		//Retourne la date introduced en String et format souhaité
 		return getDateAsString(introduced);
 	}
 	
 	public String getDiscontinuedAsString(){
+		//Retourne la date discontinued en String et format souhaité
 		return getDateAsString(discontinued);
 	}
 
@@ -103,6 +107,7 @@ public class Machine {
 	
 
 	public static class Builder {
+		//Classe utilisée lors de l'ajout d'une nouvelle machine
 		private Machine machine;
 		
 		public Builder() {
@@ -138,13 +143,4 @@ public class Machine {
 			return machine;
 		}
 	}
-
-	@Override
-	public String toString() {
-		return "Machine [id=" + id + ", name=" + name + ", introduced=" + introduced + 
-				", discontinued=" + discontinued + ", discontinued=" + discontinued + 
-				", company= " + company + "]";
-	}
-	
-	
 }

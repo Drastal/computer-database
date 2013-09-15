@@ -24,17 +24,11 @@ public class EditComputer extends HttpServlet {
 
 	private DatabaseService databaseService;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public EditComputer() {
 		super();
 		databaseService = ServiceManager.INSTANCE.getMachineService();
 	}
 
-	/**
-	 * La methode doGet est executee lorsqu'un client execute l'URI UserServlet
-	 */
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		// Envoyer un objet dans la requete (ici la liste d'utilisateurs)
 		request.setAttribute("companies", databaseService.getCompanies());
@@ -50,10 +44,6 @@ public class EditComputer extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	/**
-	 * La methode doPost est executee lorsqu'un client poste des informations
-	 * (en general formulaire) sur l'URI UserServlet
-	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Récupération et validation des champs du formulaire d'ajout
@@ -113,5 +103,4 @@ public class EditComputer extends HttpServlet {
 
 		}
 	}
-
 }
