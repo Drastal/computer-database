@@ -42,82 +42,66 @@ public class EditComputer extends HttpServlet {
 			request.setAttribute("machine", machine);
 		}
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/editComputer.jsp"));
+		RequestDispatcher rd = getServletContext()
+				.getRequestDispatcher(response.encodeURL("/WEB-INF/editComputer.jsp"));
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("Action");
+		long machineId = 0;
+		if (machineRequest != null && !machineRequest.trim().isEmpty()) {
+			machineId = Long.parseLong(machineRequest);
 
-		if (action != null && action.equals("Delete")) {
-			if (machineRequest != null && !machineRequest.trim().isEmpty()) {
-				long machineId = Long.parseLong(machineRequest);
+			if (action != null && action.equals("Delete"))
 				databaseService.deleteMachine(machineId);
-			}
-		} else {
+			else {// Recuperation et validation des champs du formulaire
+					// d'edition
+				String name = request.getParameter("name");
+				// Si le nom est vide, revenir a la page d'ajout
+				if (name.trim().length() == 0)
+					response.sendRedirect(response.encodeURL("editComputer.aspx"));
+				else {
+					Machine.Builder builder = new Machine.Builder().id(machineId).name(name);
 
-			// Recuperation et validation des champs du formulaire d'ajout
-
-			String name = request.getParameter("name");
-			// Si le nom est vide, revenir a la page d'ajout
-			if (name.trim().length() == 0) {
-				response.sendRedirect(response.encodeURL("addComputer.aspx"));
-			} else {
-				Machine.Builder builder = new Machine.Builder().name(name);
-
-				// Dates introduced et discontinued
-				String introducedString = request
-						.getParameter("introducedDate");
-				String discontinuedString = request
-						.getParameter("discontinuedDate");
-				System.out.println("introducedString: " + introducedString);
-				System.out.println("discontinuedString: " + discontinuedString);
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				Date introducedUtil = null;
-				Date discontinuedUtil = null;
-				System.out.println("introducedString: " + introducedString);
-				try {
-					// Conversion String to Date
-					if (!introducedString.isEmpty()) {
-						introducedUtil = df.parse(introducedString);
-						System.out.println("introducedUtil: " + introducedUtil);
+					// Dates introduced et discontinued
+					String introducedString = request.getParameter("introducedDate");
+					String discontinuedString = request.getParameter("discontinuedDate");
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					Date introducedUtil = null;
+					Date discontinuedUtil = null;
+					try {
+						// Conversion String to Date
+						if (!introducedString.isEmpty())
+							introducedUtil = df.parse(introducedString);
+						if (!discontinuedString.isEmpty())
+							discontinuedUtil = df.parse(discontinuedString);
+					} catch (ParseException e) {
+						response.sendRedirect(response.encodeURL("addComputer.aspx"));
+						e.printStackTrace();
 					}
-					if (!discontinuedString.isEmpty()) {
-						discontinuedUtil = df.parse(discontinuedString);
-						System.out.println("discontinuedUtil: "
-								+ discontinuedUtil);
+
+					if (introducedUtil != null && !introducedString.isEmpty())
+						builder.introduced(introducedUtil);
+					if (discontinuedUtil != null && !discontinuedString.isEmpty())
+						builder.discontinued(discontinuedUtil);
+
+					// Compagnie
+					Company company;
+					long company_id = Long.parseLong(request.getParameter("company"));
+					// Si une compagnie est selectionnee: la recuperer a partir de son id
+					if (company_id != 0) {
+						company = databaseService.getCompany(company_id);
+						builder.company(company);
 					}
-				} catch (ParseException e) {
-					response.sendRedirect(response
-							.encodeURL("addComputer.aspx"));
-					e.printStackTrace();
+					// Creation et MAJ d'une machine
+					Machine machine = builder.build();
+					databaseService.editMachine(machine);
 				}
-
-				if (introducedUtil != null && !introducedString.isEmpty()) {
-					builder.introduced(introducedUtil);
-				}
-				if (discontinuedUtil != null && !discontinuedString.isEmpty()) {
-					builder.discontinued(discontinuedUtil);
-				}
-
-				// Compagnie
-				Company company;
-				long company_id = Long.parseLong(request
-						.getParameter("company"));
-				// Si une compagnie est selectionnee: la recuperer a partir de
-				// son id
-				if (company_id != 0) {
-					company = databaseService.getCompany(company_id);
-					builder.company(company);
-				}
-				// Creation et ajout d'une machine
-				Machine machine = builder.build();
-				databaseService.create(machine);
-
 			}
+			// Redirection vers la page
+			response.sendRedirect(response.encodeURL("computerList.aspx"));
 		}
-		// Redirection vers la page
-		response.sendRedirect(response.encodeURL("computerList.aspx"));
 	}
 }

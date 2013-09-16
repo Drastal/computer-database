@@ -120,12 +120,12 @@ public class MachineDaoImpl implements MachineDao {
         try {
             em = DaoManager.INSTANCE.getEntityManager();
             em.getTransaction().begin();
-            Machine comp = em.find(Machine.class, machine.getId());
+            Machine editingMachine = em.find(Machine.class, machine.getId());
 
-            comp.setName(machine.getName());
-            comp.setIntroduced(machine.getIntroduced());
-            comp.setDiscontinued(machine.getDiscontinued());
-            comp.setCompany(machine.getCompany());
+            editingMachine.setName(machine.getName());
+            editingMachine.setIntroduced(machine.getIntroduced());
+            editingMachine.setDiscontinued(machine.getDiscontinued());
+            editingMachine.setCompany(machine.getCompany());
 
             em.getTransaction().commit();
         } catch (Exception e) {
