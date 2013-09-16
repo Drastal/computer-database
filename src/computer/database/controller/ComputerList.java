@@ -19,8 +19,8 @@ import computer.database.service.manager.ServiceManager;
 @WebServlet("/computerList.aspx")
 public class ComputerList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int resultPerPage = 50;//Nombre de résultat par page, par défaut
-	private int pageNumber = 1;//Numéro de page courante
+	private int resultPerPage = 5000;//Nombre de resultat par page, par defaut
+	private int pageNumber = 1;//Numero de page courante
 	private int totalPage = 1;//Nombre total de pages
 
 	private DatabaseService machineService;
@@ -37,15 +37,15 @@ public class ComputerList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
-		if(request.getParameter("resultsNb")!=null)//Récupère le nombre de résultats par page voulu
+		if(request.getParameter("resultsNb")!=null)//Recupere le nombre de resultats par page voulu
 			resultPerPage = Integer.parseInt(request.getParameter("resultsNb"));
-		if(request.getParameter("pageNumber")!=null)//Récupère le numéro de page courante
+		if(request.getParameter("pageNumber")!=null)//Recupere le numero de page courante
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		request.setAttribute("resultsQuantity", resultPerPage);
-		String searching = request.getParameter("search");//Récupère le mot à rechercher dans la BDD
+		String searching = request.getParameter("search");//Recupere le mot a rechercher dans la BDD
 		
 		request.setAttribute("machines", machineService.getMachines(searching, resultPerPage, pageNumber));//Affiche la liste des ordinateurs
-		request.setAttribute("sizeList", machineService.getMachines(searching).size());//Affiche le nombre de résultats
+		request.setAttribute("sizeList", machineService.getMachines(searching).size());//Affiche le nombre de resultats
 		totalPage = (int)Math.ceil((double)machineService.getMachines(searching).size() / resultPerPage);
 		request.setAttribute("totalPage", totalPage);
 		

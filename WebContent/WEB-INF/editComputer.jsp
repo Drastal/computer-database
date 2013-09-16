@@ -42,8 +42,9 @@
 			</div>
 		</fieldset>
 		<div class="actions">
-			<input type="submit" value="Edit" class="btn primary">
-			or <a href="computerList.aspx" class="btn">Cancel</a>
+			<input type="submit" value="Edit" class="btn primary" name="Action">
+			<input type="submit" value="Delete" class="btn danger" name="Action">
+			<a href="computerList.aspx" class="btn">Cancel</a>
 		</div>
 	</form>
 </section>

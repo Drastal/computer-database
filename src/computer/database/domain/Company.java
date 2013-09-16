@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "company")
-@NamedQueries({//Liste des requêtes utilisées dans la classe CompanyDaoImpl
+@NamedQueries({//Liste des requetes utilisees dans la classe CompanyDaoImpl
 	@NamedQuery(name = "findAllCompanies", query = "Select c From Company c"),
 	@NamedQuery(name = "matchCompanyById", query = "SELECT c FROM Company c WHERE c.id=:id"),})
 

@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "computer")
-@NamedQueries({//Requêtes sur la table des machines utilisées dans la classe MachineDaoImpl
+@NamedQueries({//Requetes sur la table des machines utilisees dans la classe MachineDaoImpl
 	@NamedQuery(name = "findAllMachines", query = "Select m From Machine m"),
 	@NamedQuery(name = "matchMachineById", query = "SELECT m FROM Machine m WHERE m.id = :machineId"),
     @NamedQuery(name = "searchMachine", query = "Select m From Machine m WHERE name LIKE :searching")})
@@ -39,9 +39,9 @@ public class Machine {
 	
 	@Column(name="discontinued")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date discontinued;//Date d'arrêt de la machine
+	private Date discontinued;//Date d'arret de la machine
 	
-	@ManyToOne(fetch=FetchType.EAGER)//Prend en compte le fait que plusieurs ordinateurs peuvent appartenir à une même compagnie
+	@ManyToOne(fetch=FetchType.EAGER)//Prend en compte le fait que plusieurs ordinateurs peuvent appartenir a une meme compagnie
 	@JoinColumn(name="company_id")//Fait la relation Id company <-> Nom de la company
 	private Company company;//Compagnie (Id + nom)
 	
@@ -78,7 +78,7 @@ public class Machine {
 	}
 	
 	private String getDateAsString(Date inputDate) {
-		//Convertis une date au bon format et en chaine de caractères, prend en charge les dates null
+		//Convertit une date au bon format et en chaine de caracteres, prend en charge les dates null
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = null;
         if (inputDate != null) {
@@ -88,12 +88,12 @@ public class Machine {
 	}
 	
 	public String getIntroducedAsString() {
-		//Retourne la date introduced en String et format souhaité
+		//Retourne la date introduced en String et format souhaite
 		return getDateAsString(introduced);
 	}
 	
 	public String getDiscontinuedAsString(){
-		//Retourne la date discontinued en String et format souhaité
+		//Retourne la date discontinued en String et format souhaite
 		return getDateAsString(discontinued);
 	}
 
@@ -107,7 +107,7 @@ public class Machine {
 	
 
 	public static class Builder {
-		//Classe utilisée lors de l'ajout d'une nouvelle machine
+		//Classe utilisee lors de l'ajout d'une nouvelle machine
 		private Machine machine;
 		
 		public Builder() {

@@ -38,6 +38,16 @@ public class DatabaseServiceImpl implements DatabaseService {
 	public Machine getMachine(long id) {
 		return machineDao.getMachine(id);
 	}
+
+	@Override
+	public void editMachine(Machine machine) {
+		machineDao.editMachine(machine);
+	}
+	
+	@Override
+	public void deleteMachine(long id) {
+		machineDao.deleteMachine(id);
+	}
 	
 	@Override
 	public List<Company> getCompanies() {
