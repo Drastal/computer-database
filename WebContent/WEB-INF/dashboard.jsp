@@ -3,7 +3,7 @@
 <jsp:include page="include/header.jsp" />
 
 <section id="main">
-	<h1 id="homeTitle">${requestScope.sizeList}Computersfound</h1>
+	<h1 id="homeTitle">${requestScope.sizeList} Computers found</h1>
 	<div id="actions">
 		<form action="" method="GET">
 			<input type="search" id="searchbox" name="search" value=""

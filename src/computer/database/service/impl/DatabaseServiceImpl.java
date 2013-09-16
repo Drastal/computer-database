@@ -23,23 +23,12 @@ public class DatabaseServiceImpl implements DatabaseService {
 		machineDao = DaoManager.INSTANCE.getMachineDao();
 		companyDao = DaoManager.INSTANCE.getCompanyDao();
 	}
-	/* (non-Javadoc)
-	 * @see com.formation.jee.service.impl.UserService#getUsers()
-	 */
-	@Override
-	public List<Machine> getMachines() {
-		return machineDao.getMachines();
-	}
 	
 	@Override
 	public List<Machine> getMachines(String searching) {
 		return machineDao.getMachines(searching);
 	}
 
-	@Override
-	public List<Machine> getMachines(int resultPerPage, int pageNumber) {
-		return machineDao.getMachines(resultPerPage, pageNumber);
-	}
 	@Override
 	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
 		return machineDao.getMachines(searching, resultPerPage, pageNumber);

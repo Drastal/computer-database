@@ -16,50 +16,7 @@ public class MachineDaoImpl implements MachineDao {
 	 */
 	public MachineDaoImpl() {
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Machine> getMachines() {
-		//Retourne une liste de toutes les machines présentes dans la table des machines
-		EntityManager em = null;
-		List<Machine> machines = null;
-
-		try {
-			em = DaoManager.INSTANCE.getEntityManager();
-			em.getTransaction().begin();
-			Query q = em.createNamedQuery("findAllMachines");//Recherche toutes les machines dans la BDD
-			machines = q.getResultList();//Transcrit le résultat de la requête sous forme de liste de machines
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (em != null)
-				em.close();
-		}
-		return machines;
-	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Machine> getMachines(String searching) {
-		//Retourne les machines dont le nom contient la suite de caractères entrée en paramètre
-		EntityManager em = null;
-		List<Machine> machines = null;
-
-		try {
-			em = DaoManager.INSTANCE.getEntityManager();
-			Query q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");//Recherche les machines dont le nom comporte la suite de caractères entrée en paramètre
-			machines = q.getResultList();
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(em != null)
-				em.close();
-		}
-		return machines;
-	}
-	
-
 	@Override
 	public void create(Machine machine) {
 		//Crée une nouvelle machine en l'inscrivant dans la BDD
@@ -77,30 +34,29 @@ public class MachineDaoImpl implements MachineDao {
 				em.close();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Machine> getMachines(int resultPerPage, int pageNumber) {
-		//Retourne le bon nombre de résultats dans la liste des ordinateurs pour telle page, dans la cas de la pagination
+	public List<Machine> getMachines(String searching) {
+		//Retourne les machines dont le nom contient la suite de caractères entrée en paramètre
 		EntityManager em = null;
-        List<Machine> machines = null;
+		List<Machine> machines = null;
 
-        try {
-            em = DaoManager.INSTANCE.getEntityManager();
-            Query q = em.createNamedQuery("findAllMachines");
-            
-            //Pour limiter le nombre de résultats de la requête Hibernate
-            q.setFirstResult((pageNumber - 1) * resultPerPage);//Premier résultat de la liste à retourner
-            q.setMaxResults(resultPerPage);//Nombre de résultats dans la liste à retourner
-
-            machines = q.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (em != null)
-                em.close();
-        }
-        return machines;
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			Query q = null;
+			if(searching==null||searching.trim().isEmpty())
+				q = em.createNamedQuery("findAllMachines");//Recherche toutes les machines dans la BDD
+			else
+				q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");//Recherche les machines dont le nom comporte la suite de caractères entrée en paramètre
+			machines = q.getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(em != null)
+				em.close();
+		}
+		return machines;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -112,11 +68,15 @@ public class MachineDaoImpl implements MachineDao {
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
-            Query q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");
+            Query q = null;
+            if(searching==null||searching.trim().isEmpty())
+            	q = em.createNamedQuery("findAllMachines");
+            else
+            	q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");
             
             //Pour limiter le nombre de résultats de la requête Hibernate
-            q.setFirstResult((pageNumber - 1) * resultPerPage);
-            q.setMaxResults(resultPerPage);
+            q.setFirstResult((pageNumber - 1) * resultPerPage);//Premier résultat de la liste à retourner
+            q.setMaxResults(resultPerPage);//Nombre de résultats dans la liste à retourner
 
             machines = q.getResultList();
         } catch (Exception e) {

@@ -37,24 +37,17 @@ public class ComputerList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Envoyer un objet dans la requete (ici la liste d'utilisateurs)
-		if(request.getParameter("resultsNb")!=null)
+		if(request.getParameter("resultsNb")!=null)//Récupère le nombre de résultats par page voulu
 			resultPerPage = Integer.parseInt(request.getParameter("resultsNb"));
-		if(request.getParameter("pageNumber")!=null)
+		if(request.getParameter("pageNumber")!=null)//Récupère le numéro de page courante
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		request.setAttribute("resultsQuantity", resultPerPage);
-		String searching = request.getParameter("search");
+		String searching = request.getParameter("search");//Récupère le mot à rechercher dans la BDD
 		
-		if(searching==null||searching.trim().isEmpty()){
-			request.setAttribute("machines", machineService.getMachines(resultPerPage, pageNumber));
-			request.setAttribute("sizeList", machineService.getMachines().size());
-			totalPage = (int)Math.ceil((double)machineService.getMachines().size() / resultPerPage);
-			request.setAttribute("totalPage", totalPage);
-		} else {
-			request.setAttribute("machines", machineService.getMachines(searching, resultPerPage, pageNumber));
-			request.setAttribute("sizeList", machineService.getMachines(searching).size());
-			totalPage = (int)Math.ceil((double)machineService.getMachines(searching).size() / resultPerPage);
-			request.setAttribute("totalPage", totalPage);
-		}
+		request.setAttribute("machines", machineService.getMachines(searching, resultPerPage, pageNumber));//Affiche la liste des ordinateurs
+		request.setAttribute("sizeList", machineService.getMachines(searching).size());//Affiche le nombre de résultats
+		totalPage = (int)Math.ceil((double)machineService.getMachines(searching).size() / resultPerPage);
+		request.setAttribute("totalPage", totalPage);
 		
 		//A suppr après validation pagination
 		System.out.println(pageNumber);
