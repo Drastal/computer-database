@@ -54,6 +54,7 @@ public class AddComputer extends HttpServlet {
 			System.out.println("introducedString: "+introducedString);
 			System.out.println("discontinuedString: "+discontinuedString);
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			df.setLenient(false);
 			Date introducedUtil = null;
 			Date discontinuedUtil = null;
 			System.out.println("introducedString: "+introducedString);

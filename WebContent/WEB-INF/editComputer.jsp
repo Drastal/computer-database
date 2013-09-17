@@ -37,7 +37,14 @@
 					<select name="company">
 						<option value="0">---No company selected---</option>
 						<c:forEach items="${requestScope.companies}" var="company">
-							<option value="${company.id}">${company.name}</option>
+							<c:choose>
+								<c:when test="${company.id==machine.company.id}">
+									<option value="${company.id}" selected>${company.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${company.id}">${company.name}</option>
+								</c:otherwise>
+							</c:choose>						
 						</c:forEach>
 					</select>
 				</div>
