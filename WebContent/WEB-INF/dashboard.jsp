@@ -2,75 +2,82 @@
 <%@ page import="computer.database.domain.*"%>
 <jsp:include page="include/header.jsp" />
 
+	<!-- Fichier JSP principal associe a la page comprenant la liste des ordinateurs
+	Presente sous forme de tableau la liste des machines -->
+	
 <section id="main">
 	<h1 id="homeTitle">${requestScope.sizeList} Computers found</h1>
 	<div id="actions">
 		<form action="" method="GET">
+			<!-- Champ de recherche par nom -->
 			<input type="search" id="searchbox" name="search" value=""
-				placeholder="Search name"> <input type="submit"
-				id="searchsubmit" value="Filter by name" class="btn primary" name="action">
+				placeholder="Search name"> <input type="submit" id="searchsubmit"
+				value="Filter by name" class="btn primary" name="action">
 		</form>
-		<a class="btn success" id="add" href="addComputer.aspx">Add
-			Computer</a>
+		<a class="btn success" id="add" href="addComputer.aspx">Add	Computer</a>
 	</div>
 
+	<!-- Tableau des ordinateurs -->
 	<table class="computers zebra-striped">
 		<thead>
 			<tr>
-				<!-- Variable declarations for passing labels as parameters -->
-				<!-- Table header for Computer Name -->
+				<!-- En-têtes -->
 				<th>Computer Name</th>
 				<th>Introduced Date</th>
-				<!-- Table header for Discontinued Date -->
 				<th>Discontinued Date</th>
-				<!-- Table header for Company -->
 				<th>Company</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${requestScope.machines}" var="machine">
+				<!-- Liste des ordinateurs -->
 				<tr>
-					<!-- Vérif si ok sans onclick -->
-					<td><a
-						href="<c:url value="editComputer.aspx?id=${machine.id}"/>" onclick="">${machine.name}</a></td>
+					<td><a href="<c:url value="editComputer.aspx?id=${machine.id}"/>"
+						onclick="">${machine.name}</a></td>
 					<td>${machine.introducedAsString}</td>
 					<td>${machine.discontinuedAsString}</td>
 					<td>${machine.company.name}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
-	</table>	
+	</table>
 
 	<%--Pagination--%>
-	<span class="pagination"><!-- Recuperation du style present dans le bootstrap -->
-        <ul><!-- Utilisation de ul pour le style associe dans le bootstrap -->
-		    <%--Lien precedent si necessaire --%>
+	<span class="pagination"> <!-- Recuperation du style present dans le bootstrap -->
+		<ul><!-- Utilisation de ul pour le style associe dans le bootstrap -->
+			
+			<%--Lien precedent si necessaire --%>
 			<c:if test="${pageNumber > 1}">
-		        <li><a href="computerList.aspx?page=${pageNumber - 1}">Previous</a></li>
-		    </c:if>
-            <c:forEach begin="1" end="${totalPage}" var="i">
-                <c:choose>
-                    <c:when test="${pageNumber eq i}">
-                        <li><a href="" style="color: black; font-weight: bold;">${i}</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="computerList.aspx?page=${i}">${i}</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <%--Lien suivant si necessaire --%>
+				<li><a href="computerList.aspx?page=${pageNumber - 1}">Previous</a></li>
+			</c:if>
+			
+			<!-- Affichage des numeros de page et en fait des liens -->
+			<c:forEach begin="1" end="${totalPage}" var="i">
+				<c:choose>
+					<!-- Si le numero de page a afficher est la page courante, alors style particulier -->
+					<c:when test="${pageNumber eq i}">
+						<li><a href="" style="color: black; font-weight: bold;">${i}</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="computerList.aspx?page=${i}">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			
+			<%--Lien suivant si necessaire --%>
 			<c:if test="${pageNumber lt totalPage}">
-		        <li><a href="computerList.aspx?page=${pageNumber + 1}">Next</a></li>
-		    </c:if>
-        </ul>
-    </span>
+				<li><a href="computerList.aspx?page=${pageNumber + 1}">Next</a></li>
+			</c:if>
+		</ul>
+	</span>
 
 	<!-- Nombre de resultats par page -->
 	<form action="" method="GET">
-		<span class="input" style="float: right;"> <label
-			for="resultNb">Results per page:&nbsp;</label> <select
-			name="resultsNb" style="width: 60px">
+		<span class="input" style="float: right;">
+			<label for="resultNb">Results per page:&nbsp;</label>
+			<select	name="resultsNb" style="width: 60px">
 				<c:choose>
+					<!-- Affichage du nombre de resultats par page courant -->
 					<c:when test="${requestScope.resultsQuantity==50}">
 						<option value="50" selected="selected">50</option>
 						<option value="100">100</option>
@@ -80,7 +87,8 @@
 						<option value="100" selected="selected">100</option>
 					</c:otherwise>
 				</c:choose>
-		</select> <input type="submit" value="Validate" class="btn primary" name="action">
+			</select>
+			<input type="submit" value="Validate" class="btn primary" name="action">
 		</span>
 	</form>
 </section>

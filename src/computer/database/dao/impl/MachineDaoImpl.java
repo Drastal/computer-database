@@ -115,13 +115,16 @@ public class MachineDaoImpl implements MachineDao {
 	
 	@Override
     public void editMachine(Machine machine) {
+		//Methode pour editer les donnees sur une machine
         EntityManager em = null;
         
         try {
             em = DaoManager.INSTANCE.getEntityManager();
             em.getTransaction().begin();
+            //Trouve la machine a modifier par son ID
             Machine editingMachine = em.find(Machine.class, machine.getId());
 
+            //Reinscrit les donnees de la machine dans la BDD
             editingMachine.setName(machine.getName());
             editingMachine.setIntroduced(machine.getIntroduced());
             editingMachine.setDiscontinued(machine.getDiscontinued());
@@ -138,6 +141,7 @@ public class MachineDaoImpl implements MachineDao {
 	
 	@Override
     public void deleteMachine(long id) {
+		//Methode supprimant une machine de la BDD par son identifiant
         EntityManager em = null;
         
         try {

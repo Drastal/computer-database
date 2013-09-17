@@ -3,6 +3,9 @@
 <jsp:include page="include/header.jsp" />
 <jsp:include page="include/inputVerif.jsp" />
 
+	<!-- Page pour l'edition des donnees sur un ordinateur
+	Verification des champs modifies en direct avec l'include inputVerif.jsp -->
+	
 <section id="main">
 
 	<h1>Edit Computer</h1>
@@ -38,6 +41,7 @@
 						<option value="0">---No company selected---</option>
 						<c:forEach items="${requestScope.companies}" var="company">
 							<c:choose>
+								<!-- Preselection de la compagnie de l'ordinateur deja renseignee -->
 								<c:when test="${company.id==machine.company.id}">
 									<option value="${company.id}" selected>${company.name}</option>
 								</c:when>
@@ -51,6 +55,8 @@
 			</div>
 		</fieldset>
 		
+		<!-- Actions de la page
+		Editer, Supprimer la machine de la BDD ou revenir a la liste des ordinateurs -->
 		<div class="actions">
 			<input type="submit" value="Edit" class="btn primary" name="action">
 			<input type="submit" value="Delete" class="btn danger" name="action">

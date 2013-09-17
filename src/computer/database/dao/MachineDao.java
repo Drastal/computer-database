@@ -11,6 +11,5 @@ public interface MachineDao {
 	Machine getMachine(long id);
 	void editMachine(Machine machine);
 	void deleteMachine(long id);
-	
 	void create(Machine machine);
 }
