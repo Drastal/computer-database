@@ -49,7 +49,7 @@ public class EditComputer extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("Action");
+		String action = request.getParameter("action");
 		long machineId = 0;
 		if (machineRequest != null && !machineRequest.trim().isEmpty()) {
 			machineId = Long.parseLong(machineRequest);
