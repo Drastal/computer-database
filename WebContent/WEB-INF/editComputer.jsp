@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="computer.database.domain.*"%>
 <jsp:include page="include/header.jsp" />
+<jsp:include page="include/inputVerif.jsp" />
+
 <section id="main">
 
 	<h1>Edit Computer</h1>
