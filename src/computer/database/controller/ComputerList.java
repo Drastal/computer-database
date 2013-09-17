@@ -25,8 +25,7 @@ import computer.database.service.manager.ServiceManager;
 public class ComputerList extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private int resultPerPage = 50;// Nombre de resultats par page, par defaut
-									// 50
+	private int resultPerPage = 50;// Nombre de resultats par page par defaut
 	private int pageNumber = 1;// Numero de page courante
 	private int totalPage = 1;// Nombre total de pages
 	private String searching = null;

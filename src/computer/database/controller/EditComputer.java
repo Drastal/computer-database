@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -77,22 +78,19 @@ public class EditComputer extends HttpServlet {
 							machineId).name(name);
 
 					// Dates introduced et discontinued
-					String introducedString = request
-							.getParameter("introducedDate");
-					String discontinuedString = request
-							.getParameter("discontinuedDate");
+					String introducedString = request.getParameter("introducedDate");
+					String discontinuedString = request.getParameter("discontinuedDate");
 					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					Date introducedUtil = null;
 					Date discontinuedUtil = null;
 					try {
 						// Conversion String to Date
-						if (!introducedString.isEmpty())
+						if (!introducedString.isEmpty() && estValide(introducedString))
 							introducedUtil = df.parse(introducedString);
-						if (!discontinuedString.isEmpty())
+						if (!discontinuedString.isEmpty() && estValide(discontinuedString))
 							discontinuedUtil = df.parse(discontinuedString);
 					} catch (ParseException e) {
-						response.sendRedirect(response
-								.encodeURL("addComputer.aspx"));
+						response.sendRedirect(response.encodeURL("editComputer.aspx"));
 						e.printStackTrace();
 					}
 
@@ -120,5 +118,21 @@ public class EditComputer extends HttpServlet {
 			// Redirection vers la page
 			response.sendRedirect(response.encodeURL("computerList.aspx"));
 		}
+	}
+	
+	public boolean estValide(String date){
+		//Verifie si la date appartient au calendrier
+		//Verification supplementaire cote serveur (JS desactive)
+		Calendar c = Calendar.getInstance();
+		c.setLenient(false);
+		String dateTab[] = date.split("-");
+		c.set(Integer.parseInt(dateTab[0]),Integer.parseInt(dateTab[1]),Integer.parseInt(dateTab[2]));        
+		try{
+		  c.getTime();  
+		}
+		catch(IllegalArgumentException iAE){
+		  return false;
+		}
+		return true;
 	}
 }

@@ -41,7 +41,6 @@
 						<option value="0">---No company selected---</option>
 						<c:forEach items="${requestScope.companies}" var="company">
 							<c:choose>
-								<!-- Preselection de la compagnie de l'ordinateur deja renseignee -->
 								<c:when test="${company.id==machine.company.id}">
 									<option value="${company.id}" selected>${company.name}</option>
 								</c:when>

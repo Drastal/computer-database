@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -66,10 +67,10 @@ public class AddComputer extends HttpServlet {
 			Date discontinuedUtil = null;
 			try {
 				// Conversion String to Date si la date n'est pas vide
-				if (!introducedString.isEmpty()) {
+				if (!introducedString.isEmpty() && estValide(introducedString)) {
 					introducedUtil = df.parse(introducedString);
 				}
-				if (!discontinuedString.isEmpty()) {
+				if (!discontinuedString.isEmpty() && estValide(discontinuedString)) {
 					discontinuedUtil = df.parse(discontinuedString);
 				}
 			} catch (ParseException e) {
@@ -77,11 +78,11 @@ public class AddComputer extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			// Si la date introduced n'est pas nulle, ni vide, l'ajouter au builder
+			// Si la date introduced n'est ni nulle, ni vide, l'ajouter au builder
 			if (introducedUtil != null && !introducedString.isEmpty()) {
 				builder.introduced(introducedUtil);
 			}
-			// Si la date discontinued n'est pas nulle, ni vide, l'ajouter au builder
+			// Si la date discontinued n'est ni nulle, ni vide, l'ajouter au builder
 			if (discontinuedUtil != null && !discontinuedString.isEmpty()) {
 				builder.discontinued(discontinuedUtil);
 			}
@@ -102,5 +103,21 @@ public class AddComputer extends HttpServlet {
 			// Redirection vers la page
 			response.sendRedirect(response.encodeURL("computerList.aspx"));
 		}
+	}
+	
+	public boolean estValide(String date){
+		//Verifie si la date appartient au calendrier
+		//Verification supplementaire cote serveur (JS desactive)
+		Calendar c = Calendar.getInstance();
+		c.setLenient(false);
+		String dateTab[] = date.split("-");
+		c.set(Integer.parseInt(dateTab[0]),Integer.parseInt(dateTab[1]),Integer.parseInt(dateTab[2]));        
+		try{
+		  c.getTime();  
+		}
+		catch(IllegalArgumentException iAE){
+		  return false;
+		}
+		return true;
 	}
 }

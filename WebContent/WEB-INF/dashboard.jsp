@@ -54,7 +54,6 @@
 			<!-- Affichage des numeros de page et en fait des liens -->
 			<c:forEach begin="1" end="${totalPage}" var="i">
 				<c:choose>
-					<!-- Si le numero de page a afficher est la page courante, alors style particulier -->
 					<c:when test="${pageNumber eq i}">
 						<li><a href="" style="color: black; font-weight: bold;">${i}</a></li>
 					</c:when>
@@ -77,7 +76,6 @@
 			<label for="resultNb">Results per page:&nbsp;</label>
 			<select	name="resultsNb" style="width: 60px">
 				<c:choose>
-					<!-- Affichage du nombre de resultats par page courant -->
 					<c:when test="${requestScope.resultsQuantity==50}">
 						<option value="50" selected="selected">50</option>
 						<option value="100">100</option>
