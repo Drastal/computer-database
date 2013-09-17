@@ -22,6 +22,7 @@ public class ComputerList extends HttpServlet {
 	private int resultPerPage = 50;//Nombre de resultat par page, par defaut
 	private int pageNumber = 1;//Numero de page courante
 	private int totalPage = 1;//Nombre total de pages
+	private String searching = null;
 
 	private DatabaseService machineService;
     /**
@@ -41,14 +42,17 @@ public class ComputerList extends HttpServlet {
 			resultPerPage = Integer.parseInt(request.getParameter("resultsNb"));
 		
 		String action = request.getParameter("action");//Verifie si demande de recherche ou changement du nombre de resultats par page
-		if(action!=null&&(action.equals("Validate")||action.equals("Filter by name")))
-			pageNumber = 1;//Revient a la page 1 le cas echeant
+		if(action!=null){
+			if(action.equals("Validate")||action.equals("Filter by name"))
+				pageNumber = 1;//Revient a la page 1 le cas echeant
+			if(action!=null&&!action.equals("Validate"))
+				searching = request.getParameter("search");//Recupere le mot a rechercher
+		}					
 		else
 			if(request.getParameter("page")!=null)//Recupere le numero de page courante
 				pageNumber = Integer.parseInt(request.getParameter("page"));
 		request.setAttribute("resultsQuantity", resultPerPage);
 		request.setAttribute("pageNumber", pageNumber);
-		String searching = request.getParameter("search");//Recupere le mot a rechercher dans la BDD
 		
 		request.setAttribute("machines", machineService.getMachines(searching, resultPerPage, pageNumber));//Affiche la liste des ordinateurs
 		request.setAttribute("sizeList", machineService.getMachines(searching).size());//Affiche le nombre de resultats

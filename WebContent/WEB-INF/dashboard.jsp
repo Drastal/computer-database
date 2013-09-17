@@ -52,7 +52,7 @@
             <c:forEach begin="1" end="${totalPage}" var="i">
                 <c:choose>
                     <c:when test="${pageNumber eq i}">
-                        <li><a href="">${i}</a></li>
+                        <li><a href="" style="color: black; font-weight: bold;">${i}</a></li>
                     </c:when>
                     <c:otherwise>
                         <li><a href="computerList.aspx?page=${i}">${i}</a></li>
@@ -66,6 +66,7 @@
         </ul>
     </span>
 
+	<!-- Nombre de resultats par page -->
 	<form action="" method="GET">
 		<span class="input" style="float: right;"> <label
 			for="resultNb">Results per page:&nbsp;</label> <select
