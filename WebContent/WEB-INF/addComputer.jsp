@@ -1,8 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="computer.database.domain.*"%>
 <jsp:include page="include/header.jsp" />
-<jsp:include page="include/inputVerif.jsp" />
+<jsp:include page="include/inputVerif.jsp" /> <!-- Verification des champs de saisie -->
 
+	<!-- JSP correspondant a la page d'ajout d'un ordinateur
+	Verification de chaque champ en direct via inputVerif.jsp et son JavaScript -->
+	
 <section id="main">
 
 	<h1>Add Computer</h1>

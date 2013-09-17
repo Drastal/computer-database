@@ -32,7 +32,6 @@ public enum DaoManager {
 	}
 	
 	public EntityManager getEntityManager() {
-
 		return emf.createEntityManager();
 	}
 
