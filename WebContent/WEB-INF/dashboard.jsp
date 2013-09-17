@@ -32,8 +32,7 @@
 				<tr>
 					<!-- Vérif si ok sans onclick -->
 					<td><a
-						href="<c:url value="editComputer.aspx?id=${machine.id}"/>"
-						onclick="">${machine.name}</a></td>
+						href="<c:url value="editComputer.aspx?id=${machine.id}"/>" onclick="">${machine.name}</a></td>
 					<td>${machine.introducedAsString}</td>
 					<td>${machine.discontinuedAsString}</td>
 					<td>${machine.company.name}</td>
