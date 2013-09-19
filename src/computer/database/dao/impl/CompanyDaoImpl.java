@@ -26,7 +26,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
-			Query q = em.createNamedQuery("findAllCompanies");//Recherche toutes les compagnies
+			Query q = em.createQuery("Select c From Company c");//Recherche toutes les compagnies
 			companies = q.getResultList();//Traduit le resultat de la requete en liste des compagnies
 			em.getTransaction().commit();
 		} catch(Exception e) {
@@ -47,7 +47,8 @@ public class CompanyDaoImpl implements CompanyDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
-			Query q = em.createNamedQuery("matchCompanyById").setParameter("id", id);//Recherche des compagnies correspondant a l'Id
+			Query q = em.createQuery("SELECT c FROM Company c WHERE c.id=:id")
+					.setParameter("id", id);//Recherche des compagnies correspondant a l'Id
 			company = q.getResultList();//Traduit le resultat de la recherche dans la BDD en liste
 			em.getTransaction().commit();
 		} catch (Exception e) {

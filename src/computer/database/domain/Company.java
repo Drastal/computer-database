@@ -4,15 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "company")
-@NamedQueries({//Liste des requetes utilisees dans la classe CompanyDaoImpl
-	@NamedQuery(name = "findAllCompanies", query = "Select c From Company c"),
-	@NamedQuery(name = "matchCompanyById", query = "SELECT c FROM Company c WHERE c.id=:id"),})
 
 public class Company {
 

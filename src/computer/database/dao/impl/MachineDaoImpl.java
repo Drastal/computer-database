@@ -46,9 +46,10 @@ public class MachineDaoImpl implements MachineDao {
 			em = DaoManager.INSTANCE.getEntityManager();
 			Query q = null;
 			if(searching==null||searching.trim().isEmpty())
-				q = em.createNamedQuery("findAllMachines");//Recherche toutes les machines dans la BDD
+				q = em.createQuery("Select m From Machine m");//Recherche toutes les machines dans la BDD
 			else
-				q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");//Recherche les machines dont le nom comporte la suite de caracteres entree en parametre
+				q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
+				.setParameter("searching", "%"+searching+"%");//Recherche les machines dont le nom comporte la suite de caracteres entree en parametre
 			machines = q.getResultList();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -70,9 +71,10 @@ public class MachineDaoImpl implements MachineDao {
             em = DaoManager.INSTANCE.getEntityManager();
             Query q = null;
             if(searching==null||searching.trim().isEmpty())
-            	q = em.createNamedQuery("findAllMachines");
+            	q = em.createQuery("Select m From Machine m");
             else
-            	q = em.createNamedQuery("searchMachine").setParameter("searching", "%"+searching+"%");
+            	q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
+            	.setParameter("searching", "%"+searching+"%");
             
             //Pour limiter le nombre de resultats de la requete Hibernate
             q.setFirstResult((pageNumber - 1) * resultPerPage);//Premier resultat de la liste a retourner
@@ -97,7 +99,8 @@ public class MachineDaoImpl implements MachineDao {
 
         try {
             em = DaoManager.INSTANCE.getEntityManager();
-            Query q = em.createNamedQuery("matchMachineById").setParameter("machineId", id);//Recherche la machine repondant a l'Id fourni dans la BDD
+            Query q = em.createQuery("SELECT m FROM Machine m WHERE m.id = :machineId")
+            		.setParameter("machineId", id);//Recherche la machine repondant a l'Id fourni dans la BDD
             machine = q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
