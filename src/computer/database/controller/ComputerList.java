@@ -1,6 +1,7 @@
 package computer.database.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import computer.database.domain.Machine;
 import computer.database.service.DatabaseService;
 import computer.database.service.manager.ServiceManager;
 
@@ -77,6 +79,9 @@ public class ComputerList extends HttpServlet {
 
 		request.setAttribute("resultsQuantity", resultPerPage);
 		request.setAttribute("pageNumber", pageNumber);
+		
+		//Resultat de la requete de l'utilisateur
+		List<Machine> resultList = machineService.getMachines(searching, resultPerPage, pageNumber, sortType, ascending);
 
 		// Taille de la liste de machines
 		int sizeList = machineService.getMachines(searching).size();
@@ -87,8 +92,7 @@ public class ComputerList extends HttpServlet {
 		 * Affiche la liste des ordinateurs en prenant en compte la recherche,
 		 * le nombre de resultats par page et le numero de page courante
 		 */
-		request.setAttribute("machines", machineService
-				.getMachines(searching, resultPerPage, pageNumber, sortType, ascending));
+		request.setAttribute("machines", resultList);
 
 		RequestDispatcher rd = getServletContext()
 				.getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));

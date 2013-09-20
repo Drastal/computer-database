@@ -73,22 +73,67 @@ public class MachineDaoImpl implements MachineDao {
             if(searching==null||searching.trim().isEmpty())
             	if(sortType==null)
             		q = em.createQuery("Select m From Machine m");
-            	else
-            		if(ascending)
-            			q = em.createQuery("Select m From Machine m ORDER BY m.name ASC");
+            	else//Requete selon l'ordre voulu
+            		if(sortType.equals("byName"))
+	            		if(ascending)
+	            			q = em.createQuery("Select m From Machine m ORDER BY m.name ASC");
+	            		else
+	            			q = em.createQuery("Select m From Machine m ORDER BY m.name DESC");
             		else
-            			q = em.createQuery("Select m From Machine m ORDER BY m.name DESC");
+                		if(sortType.equals("byIntroduced"))
+		            		if(ascending)
+		            			q = em.createQuery("Select m From Machine m ORDER BY m.introduced ASC");
+		            		else
+		            			q = em.createQuery("Select m From Machine m ORDER BY m.introduced DESC");
+                		else
+                    		if(sortType.equals("byDiscontinued"))
+    		            		if(ascending)
+    		            			q = em.createQuery("Select m From Machine m ORDER BY m.discontinued ASC");
+    		            		else
+    		            			q = em.createQuery("Select m From Machine m ORDER BY m.discontinued DESC");
+                    		else
+        		            	if(ascending)
+        		            		q = em.createQuery("Select m From Machine m ORDER BY m.company.name ASC");
+        		            	else
+        		            		q = em.createQuery("Select m From Machine m ORDER BY m.company.name DESC");
+            
+            
             else
             	if(sortType==null)
             		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
             			.setParameter("searching", "%"+searching+"%");
-            	else
-            		if(ascending)
-	            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.name ASC")
-	        				.setParameter("searching", "%"+searching+"%");
+            	else//Requete selon l'ordre voulu
+            		if(sortType.equals("byName"))
+	            		if(ascending)
+		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.name ASC")
+		        				.setParameter("searching", "%"+searching+"%");
+	            		else
+		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.name DESC")
+		        				.setParameter("searching", "%"+searching+"%");
             		else
-	            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.name DESC")
-	        				.setParameter("searching", "%"+searching+"%");
+                		if(sortType.equals("byIntroduced"))
+    	            		if(ascending)
+    		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.introduced ASC")
+    		        				.setParameter("searching", "%"+searching+"%");
+    	            		else
+    		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.introduced DESC")
+    		        				.setParameter("searching", "%"+searching+"%");
+                		else
+                    		if(sortType.equals("byDiscontinued"))
+        	            		if(ascending)
+        		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.discontinued ASC")
+        		        				.setParameter("searching", "%"+searching+"%");
+        	            		else
+        		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.discontinued DESC")
+        		        				.setParameter("searching", "%"+searching+"%");
+                    		else
+        	            		if(ascending)
+        		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.company.name ASC")
+        		        				.setParameter("searching", "%"+searching+"%");
+        	            		else
+        		            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.company.name DESC")
+        		        				.setParameter("searching", "%"+searching+"%");
+                    			
             
             //Pour limiter le nombre de resultats de la requete Hibernate
             q.setFirstResult((pageNumber - 1) * resultPerPage);//Premier resultat de la liste a retourner

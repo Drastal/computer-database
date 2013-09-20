@@ -23,24 +23,36 @@
 			<tr>
 				<!-- En-têtes -->
 				<th>Computer Name
-				<a href="computerList.aspx?sort=byName&asc=true">
-				<img src="img/sort_alpha_asc_mini.png" style="vertical-align: middle;"/></a>
-				<a href="computerList.aspx?sort=byName&asc=false">
-				<img src="img/sort_alpha_desc_mini.png" style="vertical-align: middle;"/></a></th>
-				<th>Introduced Date</th>
-				<th>Discontinued Date</th>
-				<th>Company</th>
+					<a href="computerList.aspx?sort=byName&asc=true">
+					<img src="img/sort_alpha_asc_mini.png" style="vertical-align: middle;"/></a>
+					<a href="computerList.aspx?sort=byName&asc=false">
+					<img src="img/sort_alpha_desc_mini.png" style="vertical-align: middle;"/></a></th>
+				<th>Introduced Date
+					<a href="computerList.aspx?sort=byIntroduced&asc=true">
+					<img src="img/sort_num_asc_mini.png" style="vertical-align: middle;"/></a>
+					<a href="computerList.aspx?sort=byIntroduced&asc=false">
+					<img src="img/sort_num_desc_mini.png" style="vertical-align: middle;"/></a></th>
+				<th>Discontinued Date
+					<a href="computerList.aspx?sort=byDiscontinued&asc=true">
+					<img src="img/sort_num_asc_mini.png" style="vertical-align: middle;"/></a>
+					<a href="computerList.aspx?sort=byDiscontinued&asc=false">
+					<img src="img/sort_num_desc_mini.png" style="vertical-align: middle;"/></a></th>
+				<th>Company
+					<a href="computerList.aspx?sort=byCompany&asc=true">
+					<img src="img/sort_alpha_asc_mini.png" style="vertical-align: middle;"/></a>
+					<a href="computerList.aspx?sort=byCompany&asc=false">
+					<img src="img/sort_alpha_desc_mini.png" style="vertical-align: middle;"/></a></th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${requestScope.machines}" var="machine">
 				<!-- Liste des ordinateurs -->
 				<tr>
-					<td><a href="<c:url value="editComputer.aspx?id=${machine.id}"/>"
+					<td style="width: 30%;"><a href="<c:url value="editComputer.aspx?id=${machine.id}"/>"
 						onclick="">${machine.name}</a></td>
-					<td>${machine.introducedAsString}</td>
-					<td>${machine.discontinuedAsString}</td>
-					<td>${machine.company.name}</td>
+					<td style="width: 25%;">${machine.introducedAsString}</td>
+					<td style="width: 25%;">${machine.discontinuedAsString}</td>
+					<td style="width: 20%;">${machine.company.name}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
