@@ -12,7 +12,7 @@
 			<!-- Champ de recherche par nom -->
 			<input type="search" id="searchbox" name="search" value=""
 				placeholder="Search name"> <input type="submit" id="searchsubmit"
-				value="Filter by name" class="btn primary" name="action">
+				value="Search" class="btn primary" name="action">
 		</form>
 		<a class="btn success" id="add" href="addComputer.aspx">Add	Computer</a>
 	</div>
@@ -22,7 +22,11 @@
 		<thead>
 			<tr>
 				<!-- En-têtes -->
-				<th>Computer Name</th>
+				<th>Computer Name
+				<a href="computerList.aspx?sort=byName&asc=true">
+				<img src="img/sort_alpha_asc_mini.png" style="vertical-align: middle;"/></a>
+				<a href="computerList.aspx?sort=byName&asc=false">
+				<img src="img/sort_alpha_desc_mini.png" style="vertical-align: middle;"/></a></th>
 				<th>Introduced Date</th>
 				<th>Discontinued Date</th>
 				<th>Company</th>

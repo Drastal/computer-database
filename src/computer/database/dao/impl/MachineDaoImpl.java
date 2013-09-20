@@ -62,7 +62,7 @@ public class MachineDaoImpl implements MachineDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
+	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber, String sortType, boolean ascending) {
 		//Retourne la liste des ordinateurs repondant aux criteres de recherche en prenant en compte la pagination (nombre de resultats limite)
 		EntityManager em = null;
         List<Machine> machines = null;
@@ -71,10 +71,24 @@ public class MachineDaoImpl implements MachineDao {
             em = DaoManager.INSTANCE.getEntityManager();
             Query q = null;
             if(searching==null||searching.trim().isEmpty())
-            	q = em.createQuery("Select m From Machine m");
+            	if(sortType==null)
+            		q = em.createQuery("Select m From Machine m");
+            	else
+            		if(ascending)
+            			q = em.createQuery("Select m From Machine m ORDER BY m.name ASC");
+            		else
+            			q = em.createQuery("Select m From Machine m ORDER BY m.name DESC");
             else
-            	q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
-            	.setParameter("searching", "%"+searching+"%");
+            	if(sortType==null)
+            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching")
+            			.setParameter("searching", "%"+searching+"%");
+            	else
+            		if(ascending)
+	            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.name ASC")
+	        				.setParameter("searching", "%"+searching+"%");
+            		else
+	            		q = em.createQuery("Select m From Machine m WHERE name LIKE :searching ORDER BY m.name DESC")
+	        				.setParameter("searching", "%"+searching+"%");
             
             //Pour limiter le nombre de resultats de la requete Hibernate
             q.setFirstResult((pageNumber - 1) * resultPerPage);//Premier resultat de la liste a retourner

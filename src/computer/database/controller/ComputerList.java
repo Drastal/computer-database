@@ -29,6 +29,8 @@ public class ComputerList extends HttpServlet {
 	private int pageNumber = 1;// Numero de page courante
 	private int totalPage = 1;// Nombre total de pages
 	private String searching = null;
+	private String sortType = null;
+	private boolean ascending = true;
 
 	private DatabaseService machineService;
 
@@ -50,19 +52,28 @@ public class ComputerList extends HttpServlet {
 		if (request.getParameter("resultsNb") != null)
 			resultPerPage = Integer.parseInt(request.getParameter("resultsNb"));
 
-		// S'il y a demande de recherche ou changement du nombre de resultats
-		// par page
+		// S'il y a demande de recherche ou changement du nombre de resultats par page
 		String action = request.getParameter("action");
 		if (action != null) {
-			if (action.equals("Validate") || action.equals("Filter by name"))
+			if (action.equals("Validate") || action.equals("Search"))
 				pageNumber = 1;// Revient a la page 1 le cas echeant
-			if (action != null && !action.equals("Validate"))
+			if (action != null && action.equals("Search"))
 				// Recupere le mot a rechercher
 				searching = request.getParameter("search");
 		} else
-		// Recupere le numero de page courante
-		if (request.getParameter("page") != null)
-			pageNumber = Integer.parseInt(request.getParameter("page"));
+			// Recupere le numero de page courante
+			if (request.getParameter("page") != null)
+				pageNumber = Integer.parseInt(request.getParameter("page"));
+		
+		// Recupere la demande de tri si existe
+		if (request.getParameter("sort") != null){
+			sortType = request.getParameter("sort");
+			if(request.getParameter("asc").equals("true"))
+				ascending = true;
+			else
+				ascending = false;
+			pageNumber = 1;// Revient a la page 1 le cas echeant
+		}
 
 		request.setAttribute("resultsQuantity", resultPerPage);
 		request.setAttribute("pageNumber", pageNumber);
@@ -76,11 +87,11 @@ public class ComputerList extends HttpServlet {
 		 * Affiche la liste des ordinateurs en prenant en compte la recherche,
 		 * le nombre de resultats par page et le numero de page courante
 		 */
-		request.setAttribute("machines", machineService.getMachines(searching,
-				resultPerPage, pageNumber));
+		request.setAttribute("machines", machineService
+				.getMachines(searching, resultPerPage, pageNumber, sortType, ascending));
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/dashboard.jsp"));
+		RequestDispatcher rd = getServletContext()
+				.getRequestDispatcher(response.encodeURL("/WEB-INF/dashboard.jsp"));
 		rd.forward(request, response);
 	}
 

@@ -30,8 +30,8 @@ public class DatabaseServiceImpl implements DatabaseService {
 	}
 
 	@Override
-	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber) {
-		return machineDao.getMachines(searching, resultPerPage, pageNumber);
+	public List<Machine> getMachines(String searching, int resultPerPage, int pageNumber, String sortType, boolean ascending) {
+		return machineDao.getMachines(searching, resultPerPage, pageNumber, sortType, ascending);
 	}	
 	
 	@Override

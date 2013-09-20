@@ -19,9 +19,11 @@ public interface MachineDao {
 	 * @param searching mot recherche
 	 * @param resultPerPage nombre de resultats par page voulu
 	 * @param pageNumber numero de page en court
+	 * @param sortType type de tri a effectuer le cas echeant
+	 * @param ascending true si a ordonner en sens croissant
 	 * @return Liste de machines
 	 */
-	List<Machine> getMachines(String searching, int resultPerPage, int pageNumber);
+	List<Machine> getMachines(String searching, int resultPerPage, int pageNumber, String sortType, boolean ascending);
 	
 	/**
 	 * Renvoie la machine selon l'id donne
